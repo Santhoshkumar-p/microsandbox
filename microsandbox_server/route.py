@@ -50,12 +50,14 @@ def create_app(config: Config, port_manager: PortManager | None = None) -> FastA
     # JSON-RPC routes (with auth)
     rpc_app = FastAPI()
     rpc_app.add_middleware(AuthMiddleware, config=config)
+    rpc_app.state.app_state = state
     rpc_app.post("/")(json_rpc_handler)
     app.mount("/api/v1/rpc", rpc_app)
 
     # MCP routes (with smart auth)
     mcp_app = FastAPI()
     mcp_app.add_middleware(McpSmartAuthMiddleware, config=config)
+    mcp_app.state.app_state = state
     mcp_app.post("/")(mcp_handler)
     app.mount("/mcp", mcp_app)
 
