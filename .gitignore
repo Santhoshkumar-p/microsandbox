@@ -24,5 +24,15 @@ libkrun.*
 .menv/
 Sandboxfile*
 
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+*.egg
+dist/
+*.so
+.pytest_cache/
+
 # Retype
 .retype/

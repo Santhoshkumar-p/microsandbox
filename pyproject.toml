@@ -1,0 +1,80 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "microsandbox"
+version = "0.2.6"
+description = "Secure microVM sandbox provisioning for running untrusted code in isolated environments"
+readme = "Documentation/README.md"
+license = {text = "Apache-2.0"}
+requires-python = ">=3.11"
+authors = [
+    {name = "Microsandbox Contributors"},
+]
+keywords = ["sandbox", "microvm", "isolation", "security", "containers"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Security",
+    "Topic :: Software Development :: Libraries",
+]
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.32.0",
+    "typer[all]>=0.15.0",
+    "pydantic>=2.10.0",
+    "pyyaml>=6.0",
+    "aiosqlite>=0.20.0",
+    "PyJWT>=2.9.0",
+    "httpx>=0.28.0",
+    "rich>=13.9.0",
+    "psutil>=6.1.0",
+    "aiofiles>=24.1.0",
+    "python-dotenv>=1.0.0",
+    "semver>=3.0.0",
+    "cryptography>=44.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.24.0",
+    "ruff>=0.8.0",
+    "mypy>=1.13.0",
+]
+
+[project.scripts]
+msb = "microsandbox_cli.main:app"
+msbserver = "microsandbox_server.__main__:main"
+msbrun = "microsandbox_cli.msbrun:main"
+
+[tool.setuptools.packages.find]
+include = [
+    "microsandbox_utils*",
+    "microsandbox_core*",
+    "microsandbox_server*",
+    "microsandbox_portal*",
+    "microsandbox_cli*",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
